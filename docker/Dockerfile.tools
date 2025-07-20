@@ -27,6 +27,13 @@ ARG BUILDPLATFORM
 ARG TARGETPLATFORM
 RUN sh /build-scripts/recpt1.sh $DISTRO $BUILDPLATFORM $TARGETPLATFORM
 
+FROM --platform=$BUILDPLATFORM mirakc/buildenv:$DISTRO-$TARGETOS-$TARGETARCH$TARGETVARIANT AS recfsusb2n-build
+COPY ./docker/build-scripts/recfsusb2n.sh /build-scripts/
+ARG DISTRO
+ARG BUILDPLATFORM
+ARG TARGETPLATFORM
+RUN sh /build-scripts/recfsusb2n.sh $DISTRO $BUILDPLATFORM $TARGETPLATFORM
+
 FROM --platform=$BUILDPLATFORM mirakc/buildenv:$DISTRO-$TARGETOS-$TARGETARCH$TARGETVARIANT AS mirakc-arib-build
 COPY ./docker/build-scripts/mirakc-arib.sh /build-scripts/
 ARG DISTRO
@@ -38,4 +45,6 @@ FROM $BASE_IMAGE AS mirakc-tools
 COPY --from=recdvb-build /usr/local/bin/recdvb /usr/local/bin/
 COPY --from=recdvb-build /usr/local/bin/recdvb.conf /usr/local/bin/
 COPY --from=recpt1-build /usr/local/bin/recpt1 /usr/local/bin/
+COPY --from=recfsusb2n-build /usr/local/bin/recfsusb2n /usr/local/bin/
+COPY --from=recfsusb2n-build /usr/local/bin/recfsusb2n.conf /usr/local/bin/
 COPY --from=mirakc-arib-build /build/build/bin/mirakc-arib /usr/local/bin/

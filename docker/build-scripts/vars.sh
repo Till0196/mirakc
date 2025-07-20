@@ -46,6 +46,14 @@ pkg-config
 EOF
 )
 
+RECFSUSB2N_DEPS=$(cat <<EOF
+ca-certificates
+curl
+make
+pkg-config
+EOF
+)
+
 MIRAKC_ARIB_DEPS=$(cat <<EOF
 autoconf
 automake

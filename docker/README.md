@@ -48,6 +48,7 @@ A [mirakc/buildenv] image is used as a build environment for each target platfor
 * mirakc-arib
 * recdvb
 * recpt1
+* recfsusb2n
 
 [mirakc/tools] images on Docker Hub can be updated by running
 [//scripts/update-tools-images](../scripts/update-tools-images).
